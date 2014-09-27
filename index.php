@@ -98,7 +98,7 @@ body{
 <?php 
 header("Content-type: text/html; charset=utf-8"); 
 include 'phpQuery/phpQuery.php';  
-
+include 'pinyin.php';  
 $item_attr = $_SERVER["QUERY_STRING"]; #id=5
 //http://www.go2.cn/firsthand/all-1-0.go
 //echo $_SERVER['PHP_SELF']."<br>"; #/blog/testurl.php
@@ -156,12 +156,20 @@ foreach($companies as $company)
   $tem = str_replace('<img src="/images/recomm.gif" title="推荐新款单品" align="absmiddle">',"",$tem);
     $tem_text = pq($company)->find('strong')->find('a')->text();
 	//echo file_get_contents('prices/'.iconv("ISO-8859-1","UTF-8",trim($name)).'.txt');
-  $tem = '<div class="product-box">'.$tem.@file_get_contents('prices/'.iconv("ISO-8859-1","UTF-8",trim($tem_text)).'.txt').'</div>';
+ 
 
   $tem_text_new = explode("&",$tem_text);
   $tem_text_new = $tem_text_new[0];
   
-  $tem_text_pinyin_new = Pinyin($tem_text_new,'utf-8');
+  $tem_text_pinyin_new = Pinyin($tem_text_new);
+  $tem_code = str_replace($tem_text_new,$tem_text_pinyin_new,$tem_text);
+  
+  $tem_content_in_file = @file_get_contents('prices/'.trim($tem_code).'.txt');
+  if(substr_count($tem_content_in_file,'woogle-price') == 1){
+    $tem = '<div class="product-box">'.$tem.$tem_content_in_file.'</div>';
+  }else{
+	$tem = '<div class="product-box">'.$tem.'<a href="http://item.taobao.com/item.htm?id=41388497386">联系5元代发</a></div>';
+  }
   $tem = str_replace($tem_text_new,$tem_text_pinyin_new,$tem);
   echo $tem;
   //echo @file_get_contents('prices/'.trim($tem_text).'.txt');
@@ -190,7 +198,7 @@ echo $tem_list;
 
 //------------------------------------------------
 
-function Pinyin($_String, $_Code='UTF8'){ //GBK页面可改为gb2312，其他随意填写为UTF8
+function Pinyin11111($String, $_Code='UTF8'){ //GBK页面可改为gb2312，其他随意填写为UTF8
         $_DataKey = "a|ai|an|ang|ao|ba|bai|ban|bang|bao|bei|ben|beng|bi|bian|biao|bie|bin|bing|bo|bu|ca|cai|can|cang|cao|ce|ceng|cha". 
                         "|chai|chan|chang|chao|che|chen|cheng|chi|chong|chou|chu|chuai|chuan|chuang|chui|chun|chuo|ci|cong|cou|cu|". 
                         "cuan|cui|cun|cuo|da|dai|dan|dang|dao|de|deng|di|dian|diao|die|ding|diu|dong|dou|du|duan|dui|dun|duo|e|en|er". 
