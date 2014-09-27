@@ -1,7 +1,7 @@
 <head>
 <style type="text/css">
 .huohao_bg{
-	background: blue;
+	background: #B62A07;
 	width: 1200px;
 	height: 80px;
 	line-height: 80px;
@@ -102,6 +102,7 @@ foreach($imgs[0] as $img){
 
 echo '</div>';
 
+include 'footer.php'; 
 //-----------------------------------------------------------------
 
 function filter_new($str){

@@ -1,5 +1,8 @@
 <head>
 <style type="text/css">
+body{
+	margin: 0;
+}
 .pagelist li{
 	float: left;
 	width: 20px;
@@ -90,7 +93,9 @@ body{
 <?php 
 header("Content-type: text/html; charset=utf-8"); 
 include 'phpQuery/phpQuery.php';  
-include 'pinyin.php';  
+include 'pinyin.php'; 
+
+include 'header.php'; 
 
 $item_attr = $_SERVER["QUERY_STRING"]; #id=5
 $new_item_attr = 'http://www.go2.cn/firsthand/'.$item_attr;
@@ -128,6 +133,8 @@ foreach($companies as $company)
 echo '</div>';
 
 echo $tem_list;
+
+include 'footer.php'; 
 ?> 
 
 <script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>
