@@ -88,6 +88,9 @@ preg_match_all('/<\s*img\s+[^>]*?src\s*=\s*(\'|\")(.*?)\\1[^>]*?\/?\s*>/i',$prod
 echo '<div id="item_page">';
 echo $product_body_id;
 echo '<div class="product_body_price_em">'.$product_body_price_em.'</div>';
+
+include 'cart.php';
+
 echo '<br><br>';
 
 $text_filter_tem = filter_new($product_body_text_new);
